@@ -19,3 +19,5 @@ to preload the template parser library and the url helper.
 Configure your web server or virtual host so that your project's
 document root maps to this **public** folder inside your project.
 
+This is Vulture Airlines. Get Vultured.
+Kareem is our best pilot.
