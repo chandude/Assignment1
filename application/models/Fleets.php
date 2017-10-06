@@ -6,7 +6,7 @@
  * Time: 12:02 PM
  */
 
-class Fleet extends CI_Model
+class Fleets extends CI_Model
 {
 
     var $data = array(
