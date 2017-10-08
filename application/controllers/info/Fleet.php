@@ -12,8 +12,6 @@ class Fleet extends Application
     $this->load->library('table');
     $parms = array(
       'table_open' => '<table class="fleet-table">',
-      'cell_start' => '<td class="planedetail">',
-      'cell_alt_start' => '<td class="oneimage">'
     );
     $this->table->set_template($parms);
 
@@ -24,6 +22,21 @@ class Fleet extends Application
 
     $this->data['pagetitle'] = 'Vulture Airlines Fleet';
     $this->data['pagebody'] = 'fleet';
+    $this->render();
+  }
+
+  public function plane($id) {
+    $plane = $this->fleets->get($id);
+    $cells[] = $this->parser->parse('_planedetail', (array)$plane, true);
+    $this->load->library('table');
+    $parms = array(
+      'table_open' => '<table class="plane-table">',
+    );
+    $this->table->set_template($parms);
+    $rows = $this->table->make_columns($cells, 1);
+    $this->data['thetable'] = $this->table->generate($rows);
+    $this->data['pagetitle'] = 'Vulture Airlines Fleet';
+    $this->data['pagebody'] = 'plane';
     $this->render();
   }
 }
