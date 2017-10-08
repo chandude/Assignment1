@@ -1,5 +1,3 @@
-<?php
-?>
 <tr>
     <td align="left">ID:</td><td align="left">{id}</td>
 </tr>

@@ -1,7 +1,16 @@
 <?php
 
+/**
+ *  Controller for the fleet view at /fleet
+ *
+ * @author Stephanie Cosacescu, Harman Mahal
+ */
+
 class Fleet extends Application
 {
+  /**
+   * Fetches data from the Fleet model and adds it to a table to be rendered in the template
+   */
   public function index()
   {
     $allPlanes = $this->fleets->all();
@@ -25,6 +34,10 @@ class Fleet extends Application
     $this->render();
   }
 
+  /**
+   * @param $id The key for the plane to be displayed in the plane view
+   * Plane subcontroller used to display the plane details for the `plane` view
+   */
   public function plane($id) {
     $plane = $this->fleets->get($id);
     $cells[] = $this->parser->parse('_planedetail', (array)$plane, true);

@@ -2,20 +2,16 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * Default controller for the application
+ * @author Harman Mahal
+ */
 class Welcome extends Application
 {
 
   /**
-   * Index Page for this controller.
-   *
-   * Maps to the following URL
-   *    http://example.com/
-   *  - or -
-   *    http://example.com/welcome/index
-   *
-   * So any other public methods not prefixed with an underscore will
-   * map to /welcome/<method_name>
-   * @see https://codeigniter.com/user_guide/general/urls.html
+   *  Homepage for the application
+   *  Provides basic overview of the Vulture Airlines
    */
   public function index()
   {
@@ -35,5 +31,4 @@ class Welcome extends Application
     $this->data['pagebody'] = 'welcome_message';
     $this->render();
   }
-
 }

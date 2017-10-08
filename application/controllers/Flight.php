@@ -1,7 +1,16 @@
 <?php
 
+/**
+ *  Controller for the flight view at /flight
+ *
+ * @author Connor Goudie
+ */
 class Flight extends Application
 {
+
+  /**
+   * Fetches data from the Flights model and adds it to a table to be rendered in the template
+   */
   public function index()
   {
     $allFlights = $this->flights->all();

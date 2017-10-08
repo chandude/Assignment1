@@ -1,4 +1,3 @@
-<?php ?>
 <tr title="Flight ID: {id}
 Plane: {plane}">
     <td class="flight-cell">{departure airport}</td>
