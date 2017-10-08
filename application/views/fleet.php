@@ -1,2 +1,5 @@
 <h1>Fleet</h1>
-{thetable}
+<p>
+    {thetable}
+</p>
+<p><a href="info/fleet">Info [JSON]</a></p>
