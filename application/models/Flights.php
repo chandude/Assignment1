@@ -1,13 +1,14 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: chand
- * Date: 2017-10-06
- * Time: 12:01 PM
+ *  Flights model providing mock up data for the airline flights
+ *  @author Chandu Dissanayake, Stephanie Cosacescu
+ *
  */
+
 
 class Flights extends CI_Model
 {
+  // Flight data for all flights scheduled by Vulture Airlines
   var $data = array(
     //PLANE 1 FLIGHTS : CONDOR I
     '1' => array('id' => 'V001',
@@ -135,13 +136,13 @@ class Flights extends CI_Model
     }
   }
 
-  // retrieve a single quote, null if not found
+  // retrieve a single flight, null if not found
   public function get($which)
   {
     return !isset($this->data[$which]) ? null : $this->data[$which];
   }
 
-  // retrieve all of the quotes
+  // retrieve all of the flights
   public function all()
   {
     return $this->data;

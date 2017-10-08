@@ -1,14 +1,14 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: chand
- * Date: 2017-10-06
- * Time: 12:02 PM
+ *  Fleets model providing mock up data for the airline planes
+ *  @author Chandu Dissanayake
+ *
  */
 
 class Fleets extends CI_Model
 {
 
+  //Fleet data for Vulture Airlines
   var $data = array(
     '1' => array('id' => 'Condor I',
       'number' => '1',
@@ -55,13 +55,13 @@ class Fleets extends CI_Model
     }
   }
 
-  // retrieve a single quote, null if not found
+  // retrieve a single plane, null if not found
   public function get($which)
   {
     return !isset($this->data[$which]) ? null : $this->data[$which];
   }
 
-  // retrieve all of the quotes
+  // retrieve all of the planes
   public function all()
   {
     return $this->data;
