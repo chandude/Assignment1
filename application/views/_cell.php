@@ -1,8 +1,8 @@
 <?php ?>
-
-<td title="">{id}&nbsp;</td> 
-<td title="">{plane}&nbsp;</td>
-<td title="">{departure airport}&nbsp;</td>
-<td title="">{destination}&nbsp;</td>
-<td title="">{departure time}&nbsp;</td>
-<td title="">{arrival time}&nbsp;</td>
+<tr title="Flight ID: {id}
+Plane: {plane}">
+    <td class="flight-cell">{departure airport}</td>
+    <td class="flight-cell">{destination}</td>
+    <td class="flight-cell">{departure time}</td>
+    <td class="flight-cell">{arrival time}</td>
+</tr>
