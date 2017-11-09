@@ -1,4 +1,4 @@
-## CodeIgniter3.1-starter3
+## Vulture Airlines 
 
 This project can be used as a starter for a webapp built with CodeIgniter 3.1.
 
