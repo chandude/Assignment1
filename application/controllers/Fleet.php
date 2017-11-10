@@ -29,8 +29,10 @@ class Fleet extends Application
     $this->data['thetable'] = $this->table->generate($rows);
 
 
-    $this->data['pagetitle'] = 'Vulture Airlines Fleet';
     $this->data['pagebody'] = 'fleet';
+    
+    $role = $this->session->userdata('userrole');
+    $this->data['pagetitle'] = 'Vulture Airlines Fleet'.' ('. $role . ')';
     $this->render();
   }
 
