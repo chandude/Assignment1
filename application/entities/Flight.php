@@ -55,7 +55,7 @@ class Flight extends Entity
 
     public function setDepartTime($departTime)
     {
-        if (is_int($departTime) && $departTime>0 && $departTime<2400 ) {
+        if (is_int($departTime) && $departTime>800 && $departTime<2200 ) {
             $this->departTime = $departTime;
             return true;
         }
@@ -64,7 +64,7 @@ class Flight extends Entity
 
     public function setArriveTime($arriveTime)
     {
-        if (is_int($arriveTime) && $arriveTime>0 && $arriveTime<2400 ) {
+        if (is_int($arriveTime) && $arriveTime>800 && $arriveTime<2200 ) {
             $this->arriveTime = $arriveTime;
             return true;
         }
