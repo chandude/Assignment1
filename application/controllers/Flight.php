@@ -29,7 +29,8 @@ class Flight extends Application
     $this->data['thetable'] = $this->table->generate($rows);
 
 
-    $this->data['pagetitle'] = 'Vulture Airlines Flights';
+    $role = $this->session->userdata('userrole');
+    $this->data['pagetitle'] = 'Vulture Airlines Flights'.' ('. $role . ')';
     $this->data['pagebody'] = 'flights';
     $this->render();
   }

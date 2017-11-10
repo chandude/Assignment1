@@ -1,4 +1,4 @@
-<h1>Flights</h1>
+<h1>{pagetitle}</h1>
 <p>
     {thetable}
 </p>
