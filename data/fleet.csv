@@ -1,2 +1,4 @@
-1/id,1/number,1/manufacturer,1/model,1/price,1/seats,1/reach,1/cruise,1/takeoff,1/hourly,1/key,2/id,2/number,2/manufacturer,2/model,2/price,2/seats,2/reach,2/cruise,2/takeoff,2/hourly,2/key,3/id,3/number,3/manufacturer,3/model,3/price,3/seats,3/reach,3/cruise,3/takeoff,3/hourly,3/key
-Condor I,1,Cessna,Grand Caravan EX,2300,14,1689,340,660,389,1,Condor II,2,Cessna,Grand Caravan EX,2300,14,1689,340,660,389,2,Condor III,3,Cessna,Grand Caravan EX,2300,14,1689,340,660,389,3
+"id","number","manufacturer","model","price","seats","reach","cruise","takeoff","hourly","key"
+"Condor I","1","Cessna","Grand Caravan EX","2300","14","1689","340","660","389","1"
+"Condor II","2","Cessna","Grand Caravan EX","2300","14","1689","340","660","389","2"
+"Condor III","3","Cessna","Grand Caravan EX","2300","14","1689","340","660","389","3"

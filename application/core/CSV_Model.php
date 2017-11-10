@@ -12,6 +12,7 @@ class CSV_Model extends Memory_Model
 //---------------------------------------------------------------------------
 //  Housekeeping methods
 //---------------------------------------------------------------------------
+
   /**
    * Constructor.
    * @param string $origin Filename of the CSV file
@@ -21,14 +22,17 @@ class CSV_Model extends Memory_Model
   function __construct($origin = null, $keyfield = 'id', $entity = null)
   {
     parent::__construct();
+
     // guess at persistent name if not specified
     if ($origin == null)
       $this->_origin = get_class($this);
     else
       $this->_origin = $origin;
+
     // remember the other constructor fields
     $this->_keyfield = $keyfield;
     $this->_entity = $entity;
+
     // start with an empty collection
     $this->_data = array(); // an array of objects
     $this->fields = array(); // an array of strings
@@ -52,7 +56,7 @@ class CSV_Model extends Memory_Model
           $first = false;
         } else {
           // build object from a row
-          $record = new $this->entity();
+          $record = new stdClass();
           for ($i = 0; $i < count($this->_fields); $i++)
             $record->{$this->_fields[$i]} = $data[$i];
           $key = $record->{$this->_keyfield};
@@ -83,4 +87,5 @@ class CSV_Model extends Memory_Model
     }
     // --------------------
   }
+
 }
