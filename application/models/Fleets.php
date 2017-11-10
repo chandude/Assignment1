@@ -9,6 +9,6 @@ class Fleets extends CSV_Model
 {
   public function __construct()
   {
-    parent::__construct(APPPATH . '../data/fleet.csv', 'id');
+    parent::__construct(APPPATH . '../data/fleet.csv', 'key');
   }
 }
