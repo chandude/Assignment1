@@ -132,5 +132,5 @@ $autoload['language'] = array();
 |
 |	$autoload['model'] = array();
 */
-$autoload['model'] = array('fleets', 'flights', 'bookings');
+$autoload['model'] = array('fleets', 'flights','wackyAPI','bookings');
 $autoload['libraries'] = array('parser', 'parsedown','session');
