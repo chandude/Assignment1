@@ -9,23 +9,47 @@
 class WackyAPI extends CI_Model {
     
     function getAirplanes() {
-        $response = file_get_contents('https://wacky.jlparry.com/info/airplanes');
-        return $response;
+        $response = Curler::curl('https://wacky.jlparry.com/info/airplanes');
+        $airlines = json_decode($response,TRUE);
+        return $airlines;
     }
     
     function getAirports(){
-        $response = file_get_contents('https://wacky.jlparry.com/info/airports');
-        return $response;
+        $response = $this->curl('https://wacky.jlparry.com/info/airports');
+        $airports = json_decode($response,TRUE);
+        return $airports;
+    }
+
+    function getAirport($airport){
+        $response = $this->curl('https://wacky.jlparry.com/info/airports/'.$airport);
+        $airport = json_decode($response,TRUE);
+        return $airport;
     }
     
-    function getAirlines(){
-        $response = file_get_contents('https://wacky.jlparry.com/info/airlines');
-        return $response;
+    function getAirline(){
+        $response = $this->curl('https://wacky.jlparry.com/info/airlines/vulture');
+        $airline = json_decode($response,TRUE);
+        return $airline;
     }
     
     function getRegions(){
-        $response = file_get_contents('https://wacky.jlparry.com/info/regions');
-        return $response;
+        $response = $this->curl('https://wacky.jlparry.com/info/regions');
+        $regions = json_decode($response,TRUE);
+        return $regions;
+    }
+
+    function curl($url){
+        // create curl resource
+        $ch = curl_init();
+        // set url
+        curl_setopt($ch, CURLOPT_URL, $url);
+        //return the transfer as a string
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        // $output contains the output string
+        $output = curl_exec($ch);
+        // close curl resource to free up system resources
+        curl_close($ch);
+        return $output;
     }
     
 }

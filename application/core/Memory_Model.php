@@ -146,6 +146,13 @@ class Memory_Model extends CI_Model implements DataMapper
     $this->store();
   }
 
+  /*
+   * function add($record) {
+   *     create plane obj
+   *     obj -> id = id
+   *     parent_construct (new obj);
+   * }
+   */
   // Retrieve an existing collection record as an object
   function get($key, $key2 = null)
   {

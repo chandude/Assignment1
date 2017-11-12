@@ -8,7 +8,6 @@
 
 class Flight extends Entity
 {
-
     private $id;
     private $plane;
     private $departure;
