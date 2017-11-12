@@ -85,7 +85,7 @@ defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automat
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 defined('ROLE_GUEST')          OR define('ROLE_GUEST', 'Guest');
 defined('ROLE_OWNER')          OR define('ROLE_OWNER', 'Owner');
-defined('FORT_NELSON')         OR define('FORT_NELSON', 'FortNelson');
-defined('FORT_ST_JOHN')        OR define('FORT_ST_JOHN', 'FortStJohn');
-defined('DEASE_LAKE')          OR define('DEASE_LAKE', 'DeaseLake');
-defined('ABBOTSFORD')          OR define('ABBOTSFORD', 'Abbotsford');
+defined('FORT_NELSON')         OR define('FORT_NELSON', 'Fort Nelson Airport');
+defined('FORT_ST_JOHN')        OR define('FORT_ST_JOHN', 'Fort St. John Airport');
+defined('DEASE_LAKE')          OR define('DEASE_LAKE', 'Dease Lake Airport');
+defined('ABBOTSFORD')          OR define('ABBOTSFORD', 'Abbotsford Airport');

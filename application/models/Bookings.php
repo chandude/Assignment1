@@ -15,7 +15,7 @@ class Bookings extends CSV_Model {
 
         public function __construct()
         {
-                parent::__construct(APPPATH . '../data/bookings.csv', 'id');
+            parent::__construct(APPPATH . '../data/tofortnelson.csv', 'id');
         }
 
 }
