@@ -1,0 +1,6 @@
+"flyingfrom","departuretime","connectingflight","connectingarrivaltime","flyingto","connectingdeparturetime","arrivaltime"
+"Fort St. John Airport","0930","","","Fort Nelson Airport","","1200"
+"Fort St. John Airport","1405","Dease Lake Airport","1555","Fort Nelson Airport","1635","1805"
+"Fort St. John Airport","1405","Dease Lake Airport","1555","Fort Nelson Airport","1630","1800"
+"Dease Lake Airport","1630","","","Fort Nelson Airport","","1800"
+"Dease Lake Airport","1000","Fort St. John","1200","Fort Nelson Airport","1230","1440"
