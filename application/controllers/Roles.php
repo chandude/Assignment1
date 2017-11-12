@@ -19,5 +19,16 @@ class Roles extends Application
             $this->session->set_userdata('userrole',$role);
             redirect($_SERVER['HTTP_REFERER']); // back where we came from
         }
-
+        
+        public function from($location = FORT_NELSON)
+        {
+            $this->session->set_userdata('flyingFrom', $location);
+            redirect($_SERVER['HTTP_REFERER']); // back where we came from
+        }
+        
+        public function to($location = FORT_NELSON)
+        {
+            $this->session->set_userdata('flyingTo', $location);
+            redirect($_SERVER['HTTP_REFERER']); // back where we came from
+        }
 }
