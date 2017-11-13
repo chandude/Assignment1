@@ -1,5 +1,13 @@
 <h1>{pagetitle}</h1>
-<p>
+{flightadd}
+<table class="table">
+    <tr>
+        <th>Id</th>
+        <th>Departing From</th>
+        <th>Arriving At</th>
+        <th>Departure Time</th>
+        <th>Arrival Time</th>
+    </tr>
     {thetable}
-</p>
+</table>
 <p><a href="info/flights">Info [JSON]</a></p>
