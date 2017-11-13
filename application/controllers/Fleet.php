@@ -54,33 +54,25 @@ class Fleet extends Application
     $this->render();
   }
 
-
-
-  //TODO: Edit the form with the proper fields
-  //TODO: Add the validation rules
   private function showit()
   {
     $this->load->helper('form');
-    $task = $this->session->userdata('task');
-    $this->data['id'] = $task->id;
+    $plane = $this->session->userdata('fleet');
+    $this->data['id'] = $plane->id;
 
     // if no errors, pass an empty message
     if (!isset($this->data['error']))
       $this->data['error'] = '';
 
-    //FIXME: Find proper fields
     //This should only have a single drop down with plane name and single field with plane name and add it to the CSV
     $fields = array(
-      'ftask' => form_label('Task description') . form_input('task', $task->task),
-      'fpriority' => form_label('Priority') . form_dropdown('priority', $this->app->priority(), $task->priority),
-      'fsize' => form_label('Size') . form_dropdown('size', $this->app->size(), $task->size),
-      'fgroup' => form_label('Group') . form_dropdown('group', $this->app->group(), $task->group),
-      'fstatus' => form_label('Status') . form_dropdown('status', $this->app->status(), $task->status),
-      'zsubmit' => form_submit('submit', 'Update the TODO task'),
+      'fid' => form_label('Task description') . form_input('id', $plane->id),
+      'fplaneId' => form_label('Plane Model') . form_dropdown('planeId', $this->app->getAllPlanes(), $plane->planeId),
+      'zsubmit' => form_submit('submit', 'Update the Plane Info'),
     );
     $this->data = array_merge($this->data, $fields);
 
-    $this->data['pagebody'] = 'itemedit';
+    $this->data['pagebody'] = 'fleetedit';
     $this->render();
   }
 
@@ -112,29 +104,30 @@ class Fleet extends Application
 // handle form submission
   public function submit()
   {
-    // setup for validation
-    $this->load->library('form_validation');
-    $this->form_validation->set_rules($this->fleets->rules());
-
     // retrieve & update data transfer buffer
+    $post = $this->input->post();
     $plane = (array)$this->session->userdata('fleet');
+    $planeInfo = $this->app->getPlaneInfo($post['planeId']);
+    unset($planeInfo->id);
+    $plane = array_merge((array)$planeInfo, $post);
     $plane = array_merge($plane, $this->input->post());
     $plane = (object)$plane;  // convert back to object
     $this->session->set_userdata('fleet', (object)$plane);
 
     // validate away
-    if ($this->form_validation->run()) {
+    if ($this->app->validatePlane($plane)) {
       if (empty($plane->id)) {
-        $plane->id = $this->flights->highest() + 1;
-        $this->tasks->add($plane);
-        $this->alert('Task ' . $plane->id . ' added', 'success');
+        $plane->number = $this->flights->highest() + 1;
+        $this->fleets->add($plane);
+        $this->alert('Plane' . $plane->id . ' added', 'success');
       } else {
-        $this->tasks->update($plane);
-        $this->alert('Task ' . $plane->id . ' updated', 'success');
+        $this->fleets->update($plane);
+        $this->alert('Plane' . $plane->id . ' updated', 'success');
       }
     } else {
-      $this->alert('<strong>Validation errors!<strong><br>' . validation_errors(), 'danger');
+      $this->alert('<strong>Validation errors!<strong><br>' . 'The plane is over budget, danger');
     }
+
     $this->showit();
   }
 
@@ -147,8 +140,8 @@ class Fleet extends Application
   function delete()
   {
     $dto = $this->session->userdata('fleet');
-    $plane = $this->tasks->get($dto->id);
-    $this->fleets->delete($plane->id);
+    $plane = $this->fleets->get($dto->key);
+    $this->fleets->delete($plane->key);
     $this->session->unset_userdata('fleet');
     redirect('/fleet');
   }

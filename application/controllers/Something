@@ -1,0 +1,8 @@
+      'fmodel' => form_label('Model') . form_dropdown('model', $this->app->getPlane($plane->planeId), $plane->model),
+      'fmanufacturer' => form_label('Manufacturer') . form_dropdown('manufacturer', $this->app->planeManufacturer($plane->planeId), $plane->manufacturer),
+      'fprice' => form_label('Price') . form_dropdown('price', $this->app->planePrice($plane->planeId), $plane->price),
+      'fseats' => form_label('Seats') . form_dropdown('seats', $this->app->planeSeats($plane->planeId), $plane->seats),
+      'freach' => form_label('Reach') . form_dropdown('reach', $this->app->planeReach($plane->planeId), $plane->reach),
+      'fcruise' => form_label('Cruise') . form_dropdown('cruise', $this->app->planeCruise($plane->planeId), $plane->cruise),
+      'ftakeoff' => form_label('Takeoff') . form_dropdown('takeoff', $this->app->planeTakeoff($plane->planeId), $plane->takeoff),
+      'fhourly' => form_label('Hourly') . form_dropdown('hourly', $this->app->planeHourly($plane->planeId), $plane->hourly),

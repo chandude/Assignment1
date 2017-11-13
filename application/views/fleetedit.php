@@ -1,10 +1,7 @@
 <h1>Plane # {id}</h1>
 <form role="form" action="/fleet/submit" method="post">
-  {ftask}
-  {fpriority}
-  {fsize}
-  {fgroup}
-  {fstatus}
+  {fid}
+  {fplaneId}
   {zsubmit}
 </form>
 {error}

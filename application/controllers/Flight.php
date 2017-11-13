@@ -36,13 +36,11 @@ class Flight extends Application
     $this->render();
   }
 
-  //TODO: Edit the form with the proper fields
-  //TODO: Add the validation rules
   private function showit()
   {
     $this->load->helper('form');
-    $task = $this->session->userdata('task');
-    $this->data['id'] = $task->id;
+    $flight = $this->session->userdata('flight');
+    $this->data['id'] = $flight->id;
 
     // if no errors, pass an empty message
     if (!isset($this->data['error']))
@@ -51,16 +49,16 @@ class Flight extends Application
     //FIXME: Find proper fields
     //This should have fields for flight name, Plane drop down, from and to drop down, take off time, landing should be calculated?
     $fields = array(
-      'ftask' => form_label('Task description') . form_input('task', $task->task),
-      'fpriority' => form_label('Priority') . form_dropdown('priority', $this->app->priority(), $task->priority),
-      'fsize' => form_label('Size') . form_dropdown('size', $this->app->size(), $task->size),
-      'fgroup' => form_label('Group') . form_dropdown('group', $this->app->group(), $task->group),
-      'fstatus' => form_label('Status') . form_dropdown('status', $this->app->status(), $task->status),
-      'zsubmit' => form_submit('submit', 'Update the TODO task'),
+      'fid' => form_label('Flight ID') . form_input('id', $flight->id),
+      'fplane' => form_label('Plane') . form_dropdown('plane', $this->app->plane(), $flight->plane),
+      'fto' => form_label('Destination') . form_dropdown('destination', $this->app->airports(), $flight->destination),
+      'ffrom' => form_label('Departure Airport') . form_dropdown('departure airport', $this->app->airports(), $flight->departure),
+      'ftakeoff' => form_label('Departure Time') . form_dropdown('departure time', $this->app->takeofftime(), $flight->departTime),
+      'zsubmit' => form_submit('submit', 'Update the Flight details'),
     );
     $this->data = array_merge($this->data, $fields);
 
-    $this->data['pagebody'] = 'itemedit';
+    $this->data['pagebody'] = 'flightedit';
     $this->render();
   }
 
@@ -127,7 +125,7 @@ class Flight extends Application
   function delete()
   {
     $dto = $this->session->userdata('flight');
-    $flight = $this->tasks->get($dto->id);
+    $flight = $this->flights->get($dto->id);
     $this->flights->delete($flight->id);
     $this->session->unset_userdata('flight');
     redirect('/flight');
