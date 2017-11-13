@@ -6,6 +6,8 @@
  * Time: 2:04 PM
  */
 
+require_once 'Entity.php';
+
 class Flight extends Entity
 {
     private $id;
