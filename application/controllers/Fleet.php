@@ -13,26 +13,24 @@ class Fleet extends Application
    */
   public function index()
   {
-    $allPlanes = $this->fleets->all();
-
-    foreach ($allPlanes as $plane) {
-      $cells[] = $this->parser->parse('_planecell', (array)$plane, true);
-    }
-    $this->load->library('table');
-    $parms = array(
-      'table_open' => '<table class="fleet-table">',
-    );
-    $this->table->set_template($parms);
-
-    $rows = $this->table->make_columns($cells, 1);
-    $this->table->set_heading('', 'ID', 'Model', 'Range');
-    $this->data['thetable'] = $this->table->generate($rows);
-
-
-    $this->data['pagebody'] = 'fleet';
-    
     $role = $this->session->userdata('userrole');
-    $this->data['pagetitle'] = 'Vulture Airlines Fleet'.' ('. $role . ')';
+    $allPlanes = $this->fleets->all();
+    $cells = '';
+    foreach ($allPlanes as $plane) {
+      if ($role == ROLE_OWNER)
+        $cells .= $this->parser->parse('_planecellx', (array)$plane, true);
+      else
+        $cells .= $this->parser->parse('_planecell', (array)$plane, true);
+    }
+
+    $this->data['thetable'] = $cells;
+    $this->data['pagebody'] = 'fleet';
+    if ($role == ROLE_OWNER)
+      $this->data['addplane'] = $this->parser->parse('fleetadd', [], true);
+    else
+      $this->data['addplane'] = '';
+
+    $this->data['pagetitle'] = 'Vulture Airlines Fleet' . ' (' . $role . ')';
     $this->render();
   }
 
@@ -40,7 +38,8 @@ class Fleet extends Application
    * @param $id The key for the plane to be displayed in the plane view
    * Plane subcontroller used to display the plane details for the `plane` view
    */
-  public function plane($id) {
+  public function plane($id)
+  {
     $plane = $this->fleets->get($id);
     $cells[] = $this->parser->parse('_planedetail', (array)$plane, true);
     $this->load->library('table');
@@ -53,5 +52,98 @@ class Fleet extends Application
     $this->data['pagetitle'] = 'Vulture Airlines Fleet';
     $this->data['pagebody'] = 'plane';
     $this->render();
+  }
+
+  private function showit()
+  {
+    $this->load->helper('form');
+    $plane = $this->session->userdata('fleet');
+    $this->data['id'] = $plane->id;
+
+    // if no errors, pass an empty message
+    if (!isset($this->data['error']))
+      $this->data['error'] = '';
+
+    //This should only have a single drop down with plane name and single field with plane name and add it to the CSV
+    $fields = array(
+      'fid' => form_label('Task description') . form_input('id', $plane->id),
+      'fplaneId' => form_label('Plane Model') . form_dropdown('planeId', $this->app->getAllPlanes(), $plane->planeId),
+      'zsubmit' => form_submit('submit', 'Update the Plane Info'),
+    );
+    $this->data = array_merge($this->data, $fields);
+
+    $this->data['pagebody'] = 'fleetedit';
+    $this->render();
+  }
+
+  // Initiate adding a new task
+  public function add()
+  {
+    $plane = $this->fleets->create();
+    $this->session->set_userdata('fleet', $plane);
+    $this->showit();
+  }
+
+  // initiate editing of a task
+  public function edit($id = null)
+  {
+    if ($id == null)
+      redirect('/fleet');
+    $plane = $this->fleets->get($id);
+    $this->session->set_userdata('fleet', $plane);
+    $this->showit();
+  }
+
+  // build a suitable error mesage
+  private function alert($message)
+  {
+    $this->load->helper('html');
+    $this->data['error'] = heading($message, 3);
+  }
+
+// handle form submission
+  public function submit()
+  {
+    // retrieve & update data transfer buffer
+    $post = $this->input->post();
+    $plane = (array)$this->session->userdata('fleet');
+    $planeInfo = $this->app->getPlaneInfo($post['planeId']);
+    unset($planeInfo->id);
+
+    $planeInfo = array_merge((array)$planeInfo, $post);
+    $plane = array_merge($plane, $planeInfo);
+    $plane = (object)$plane;  // convert back to object
+    $this->session->set_userdata('fleet', (object)$plane);
+
+    // validate away
+    if ($this->app->validatePlane($plane)) {
+      if (empty($plane->key)) {
+        $plane->key = $this->fleets->highest() + 1;
+        $this->fleets->add($plane);
+        $this->alert('Plane ' . $plane->id . ' added', 'success');
+      } else {
+        $this->fleets->update($plane);
+        $this->alert('Plane ' . $plane->id . ' updated', 'success');
+      }
+    } else {
+      $this->alert('<strong>Validation errors!<strong><br>' . 'The plane is over budget, danger');
+    }
+
+    $this->showit();
+  }
+
+  function cancel()
+  {
+    $this->session->unset_userdata('fleet');
+    redirect('/fleet');
+  }
+
+  function delete()
+  {
+    $dto = $this->session->userdata('fleet');
+    $plane = $this->fleets->get($dto->key);
+    $this->fleets->delete($plane->key);
+    $this->session->unset_userdata('fleet');
+    redirect('/fleet');
   }
 }
