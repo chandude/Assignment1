@@ -98,6 +98,8 @@ class App extends CI_Model
       return false;
     if($flight->departTime < $earliestTakeoffTime)
       return false;
+    if($flight->departTime > $flight->arrivalTime)
+      return false;
 
     return true;
   }

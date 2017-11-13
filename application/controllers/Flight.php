@@ -51,9 +51,9 @@ class Flight extends Application
       'fid' => form_label('Flight ID') . form_input('id', $flight->id),
       'fplane' => form_label('Plane') . form_dropdown('plane', $this->app->plane(), $flight->plane),
       'fto' => form_label('Destination') . form_dropdown('destination', $this->app->airports(), $flight->destination),
-      'ffrom' => form_label('Departure Airport') . form_dropdown('departure airport', $this->app->airports(), $flight->departure),
-      'ftakeoff' => form_label('Departure Time') . form_input('departure time', $flight->departTime),
-      'flanding' => form_label('Landing Time') . form_input('landing time', $flight->arrivalTime),
+      'ffrom' => form_label('Departure Airport') . form_dropdown('departure', $this->app->airports(), $flight->departure),
+      'ftakeoff' => form_label('Departure Time') . form_input('departTime', $flight->departTime),
+      'flanding' => form_label('Landing Time') . form_input('arrivalTime', $flight->arrivalTime),
       'zsubmit' => form_submit('submit', 'Update the Flight details'),
     );
     $this->data = array_merge($this->data, $fields);
