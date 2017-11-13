@@ -104,10 +104,10 @@ class Flight extends Application
     if ($this->form_validation->run()) {
       if (empty($flight->id)) {
         $flight->id = $this->flights->highest() + 1;
-        $this->tasks->add($flight);
+        $this->flights->add($flight);
         $this->alert('Task ' . $flight->id . ' added', 'success');
       } else {
-        $this->tasks->update($flight);
+        $this->flights->update($flight);
         $this->alert('Task ' . $flight->id . ' updated', 'success');
       }
     } else {

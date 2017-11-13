@@ -109,20 +109,21 @@ class Fleet extends Application
     $plane = (array)$this->session->userdata('fleet');
     $planeInfo = $this->app->getPlaneInfo($post['planeId']);
     unset($planeInfo->id);
-    $plane = array_merge((array)$planeInfo, $post);
-    $plane = array_merge($plane, $this->input->post());
+
+    $planeInfo = array_merge((array)$planeInfo, $post);
+    $plane = array_merge($plane, $planeInfo);
     $plane = (object)$plane;  // convert back to object
     $this->session->set_userdata('fleet', (object)$plane);
 
     // validate away
     if ($this->app->validatePlane($plane)) {
-      if (empty($plane->id)) {
-        $plane->number = $this->flights->highest() + 1;
+      if (empty($plane->key)) {
+        $plane->key = $this->fleets->highest() + 1;
         $this->fleets->add($plane);
-        $this->alert('Plane' . $plane->id . ' added', 'success');
+        $this->alert('Plane ' . $plane->id . ' added', 'success');
       } else {
         $this->fleets->update($plane);
-        $this->alert('Plane' . $plane->id . ' updated', 'success');
+        $this->alert('Plane ' . $plane->id . ' updated', 'success');
       }
     } else {
       $this->alert('<strong>Validation errors!<strong><br>' . 'The plane is over budget, danger');
