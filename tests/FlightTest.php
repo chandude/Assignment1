@@ -4,19 +4,19 @@ use PHPUnit\Framework\TestCase;
 require '../application/entities/Flight.php';
 
 class FlightTest extends TestCase { 
-    private $testTask;
+    private $testFlight;
     
     public function setUp(){
-        $this->testTast = new Task();
+        $this->testFlight = new Flight();
     }
     
     public function testFlightEntity(){
-        $setId = $this->testTask->setId(4);
-        $setPlane = $this->testTask->setPlane('Condor3000');
-        $setDeparture = $this->testTask->setDeparture('Vancouver');
-        $setDestination = $this->testTask->setDestination('Prince Rupert');
-        $setDepartTime = $this->testTask->setDepartTime(1000);
-        $setArriveTime = $this->testTask->setArriveTime(2200);
+        $setId = $this->testFlight->setId(4);
+        $setPlane = $this->testFlight->setPlane('Condor3000');
+        $setDeparture = $this->testFlight->setDeparture('Vancouver');
+        $setDestination = $this->testFlight->setDestination('Prince Rupert');
+        $setDepartTime = $this->testFlight->setDepartTime(1000);
+        $setArriveTime = $this->testFlight->setArriveTime(2100);
               
         $this->assertTrue($setId);
         $this->assertTrue($setPlane);
@@ -27,9 +27,9 @@ class FlightTest extends TestCase {
     }
     
     public function testFlightEntityEmptyStringFailure(){
-        $setPlane = $this->testTask->setPlane('');
-        $setDeparture = $this->testTask->setDeparture('');
-        $setDestination = $this->testTask->setDestination('');
+        $setPlane = $this->testFlight->setPlane('');
+        $setDeparture = $this->testFlight->setDeparture('');
+        $setDestination = $this->testFlight->setDestination('');
         
         $this->assertFalse($setPlane);
         $this->assertFalse($setDeparture);
@@ -38,11 +38,11 @@ class FlightTest extends TestCase {
     
     public function testFlightEntityLongStringFailure(){
         //longest word in Norwegian. Means "(a) device for measuring the distance between particles in a crystal"
-        $setPlane = $this->testTask->setPlane('minoritetsladningsbærerdiffusjonskoeffisientmålingsapparatur');
+        $setPlane = $this->testFlight->setPlane('minoritetsladningsbærerdiffusjonskoeffisientmålingsapparatur');
         //longest word in Maori. Means "The summit where Tamatea, the man with the big knees, the slider, climber of mountains, the land-swallower who travelled about, played his nose flute to his loved one".
-        $setDeparture = $this->testTask->setDeparture('Taumatawhakatangihangakoauauotamateaturipukakapikomaungahoronukupokaiwhenuakitanatahu');
+        $setDeparture = $this->testFlight->setDeparture('Taumatawhakatangihangakoauauotamateaturipukakapikomaungahoronukupokaiwhenuakitanatahu');
         //longest word in Ojibwe. Means blueberry pie
-        $setDestination = $this->testTask->setDestination('miinibaashkiminasiganibiitoosijiganibadagwiingweshiganibakwezhigan');
+        $setDestination = $this->testFlight->setDestination('miinibaashkiminasiganibiitoosijiganibadagwiingweshiganibakwezhigan');
         
         $this->assertFalse($setPlane);
         $this->assertFalse($setDeparture);
@@ -50,9 +50,9 @@ class FlightTest extends TestCase {
     }
     
     public function testFlightEntitySmallIntFailure(){
-        $setId = $this->testTask->setId(0);
-        $setDepartTime = $this->testTask->setDepartTime(600);
-        $setArriveTime = $this->testTask->setArriveTime(500);
+        $setId = $this->testFlight->setId(0);
+        $setDepartTime = $this->testFlight->setDepartTime(600);
+        $setArriveTime = $this->testFlight->setArriveTime(500);
         
         $this->assertFalse($setId);
         $this->assertFalse($setDepartTime);
@@ -60,8 +60,8 @@ class FlightTest extends TestCase {
     }
     
     public function testFlightEntityBigIntFailure(){ 
-        $setDepartTime = $this->testTask->setDepartTime(2300);
-        $setArriveTime = $this->testTask->setArriveTime(2400);
+        $setDepartTime = $this->testFlight->setDepartTime(2300);
+        $setArriveTime = $this->testFlight->setArriveTime(2400);
 
         $this->assertFalse($setDepartTime);
         $this->assertFalse($setArriveTime);

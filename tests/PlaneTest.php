@@ -5,16 +5,16 @@ require '../application/entities/Plane.php';
 
 class PlaneTest extends TestCase{
     
-    private $testTask;
+    private $testPlane;
     
     public function setUp(){
-        $this->testTast = new Task();
+        $this->testPlane = new Plane();
     }
     
     public function testPlaneStringEntity(){
-        $setId = $this->testTask->setId('Condor 2');
-        $setManufacturer= $this->testTask->$setManufacturer('Connor Goudie');
-        $setModel= $this->testTask->$setModel('Ultra 9000X');
+        $setId = $this->testPlane->setId('Condor 2');
+        $setManufacturer= $this->testPlane->setManufacturer('Connor Goudie');
+        $setModel= $this->testPlane->setModel('Ultra 9000X');
         
         $this->assertTrue($setId);
         $this->assertTrue($setManufacturer);
@@ -22,13 +22,13 @@ class PlaneTest extends TestCase{
     }
     
     public function testPlaneIntEntity(){
-        $setNumber= $this->testTask->$setNumber(23);
-        $setPrice= $this->testTask->$setPrice(1350);
-        $setSeats= $this->testTask->$setSeats(300);
-        $setReach= $this->testTask->$setReach(4560);
-        $setCruise= $this->testTask->$setCruise(3300);
-        $setTakeoff= $this->testTask->$setTakeoff();
-        $setHourly= $this->testTask->$setHourly();
+        $setNumber= $this->testPlane->setNumber(23);
+        $setPrice= $this->testPlane->setPrice(1350);
+        $setSeats= $this->testPlane->setSeats(300);
+        $setReach= $this->testPlane->setReach(4560);
+        $setCruise= $this->testPlane->setCruise(3300);
+        $setTakeoff= $this->testPlane->setTakeoff(100);
+        $setHourly= $this->testPlane->setHourly(1000);
        
         $this->assertTrue($setNumber);
         $this->assertTrue($setPrice);
@@ -40,13 +40,13 @@ class PlaneTest extends TestCase{
     }
         
     public function testPlaneEntityIntTooSmallFailure(){
-        $setNumber= $this->testTask->$setNumber(0);
-        $setPrice= $this->testTask->$setPrice(0);
-        $setSeats= $this->testTask->$setSeats(0);
-        $setReach= $this->testTask->$setReach(0);
-        $setCruise= $this->testTask->$setCruise(0);
-        $setTakeoff= $this->testTask->$setTakeoff(0);
-        $setHourly= $this->testTask->$setHourly(0);
+        $setNumber= $this->testPlane->setNumber(0);
+        $setPrice= $this->testPlane->setPrice(0);
+        $setSeats= $this->testPlane->setSeats(0);
+        $setReach= $this->testPlane->setReach(0);
+        $setCruise= $this->testPlane->setCruise(0);
+        $setTakeoff= $this->testPlane->setTakeoff(0);
+        $setHourly= $this->testPlane->setHourly(0);
         
         $this->assertFalse($setNumber);
         $this->assertFalse($setPrice);
@@ -58,9 +58,9 @@ class PlaneTest extends TestCase{
     }
     
     public function testPlaneEntityEmptyStringFailure(){
-        $setId = $this->testTask->setId('');
-        $setManufacturer= $this->testTask->$setManufacturer('');
-        $setModel= $this->testTask->$setModel('');
+        $setId = $this->testPlane->setId('');
+        $setManufacturer= $this->testPlane->setManufacturer('');
+        $setModel= $this->testPlane->setModel('');
         
         $this->assertFalse($setId);
         $this->assertFalse($setManufacturer);
@@ -68,9 +68,9 @@ class PlaneTest extends TestCase{
         
     }
     public function testPlaneEntityLongStringFailure(){
-        $setId = $this->testTask->setId('minoritetsladningsbærerdiffusjonskoeffisientmålingsapparatur');
-        $setManufacturer= $this->testTask->$setManufacturer('Taumatawhakatangihangakoauauotamateaturipukakapikomaungahoronukupokaiwhenuakitanatahu');
-        $setModel= $this->testTask->$setModel('miinibaashkiminasiganibiitoosijiganibadagwiingweshiganibakwezhigan');
+        $setId = $this->testPlane->setId('minoritetsladningsbærerdiffusjonskoeffisientmålingsapparatur');
+        $setManufacturer= $this->testPlane->setManufacturer('Taumatawhakatangihangakoauauotamateaturipukakapikomaungahoronukupokaiwhenuakitanatahu');
+        $setModel= $this->testPlane->setModel('miinibaashkiminasiganibiitoosijiganibadagwiingweshiganibakwezhigan');
         
         $this->assertFalse($setId);
         $this->assertFalse($setManufacturer);
