@@ -46,14 +46,14 @@ class Flight extends Application
     if (!isset($this->data['error']))
       $this->data['error'] = '';
 
-    //FIXME: Find proper fields
     //This should have fields for flight name, Plane drop down, from and to drop down, take off time, landing should be calculated?
     $fields = array(
       'fid' => form_label('Flight ID') . form_input('id', $flight->id),
       'fplane' => form_label('Plane') . form_dropdown('plane', $this->app->plane(), $flight->plane),
       'fto' => form_label('Destination') . form_dropdown('destination', $this->app->airports(), $flight->destination),
       'ffrom' => form_label('Departure Airport') . form_dropdown('departure airport', $this->app->airports(), $flight->departure),
-      'ftakeoff' => form_label('Departure Time') . form_dropdown('departure time', $this->app->takeofftime(), $flight->departTime),
+      'ftakeoff' => form_label('Departure Time') . form_input('departure time', $flight->departTime),
+      'flanding' => form_label('Landing Time') . form_input('landing time', $flight->arrivalTime),
       'zsubmit' => form_submit('submit', 'Update the Flight details'),
     );
     $this->data = array_merge($this->data, $fields);
@@ -90,10 +90,6 @@ class Flight extends Application
 // handle form submission
   public function submit()
   {
-    // setup for validation
-    $this->load->library('form_validation');
-    $this->form_validation->set_rules($this->flights->rules());
-
     // retrieve & update data transfer buffer
     $flight = (array)$this->session->userdata('flight');
     $flight = array_merge($flight, $this->input->post());
@@ -101,17 +97,18 @@ class Flight extends Application
     $this->session->set_userdata('flight', (object)$flight);
 
     // validate away
-    if ($this->form_validation->run()) {
-      if (empty($flight->id)) {
-        $flight->id = $this->flights->highest() + 1;
+    if ($this->app->validateFlight($flight)) {
+      if (empty($flight->key)) {
+        $flight->key = $this->flights->highest() + 1;
         $this->flights->add($flight);
-        $this->alert('Task ' . $flight->id . ' added', 'success');
+        $this->alert('Flight ' . $flight->id . ' added', 'success');
       } else {
         $this->flights->update($flight);
-        $this->alert('Task ' . $flight->id . ' updated', 'success');
+        $this->alert('Flight ' . $flight->id . ' updated', 'success');
       }
     } else {
-      $this->alert('<strong>Validation errors!<strong><br>' . validation_errors(), 'danger');
+      print_r($flight);
+      $this->alert('<strong>Validation errors!<strong><br>' . 'Invalid flight details, danger');
     }
     $this->showit();
   }

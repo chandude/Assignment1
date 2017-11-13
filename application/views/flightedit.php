@@ -5,6 +5,7 @@
     {ffrom}
     {fto}
     {ftakeoff}
+    {flanding}
     {zsubmit}
 </form>
 {error}

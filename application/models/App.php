@@ -2,19 +2,6 @@
 
 class App extends CI_Model
 {
-
-  private $takeofftimes = [
-    '0800',
-    '0900',
-    '1000',
-    '1100',
-    '1200',
-    '1300',
-    '1400',
-    '1500',
-    '1600'
-  ];
-
   public function __construct()
   {
     parent::__construct();
@@ -23,10 +10,13 @@ class App extends CI_Model
   public function plane($which = null)
   {
     $planes = $this->fleets->all();
-    $planes = array_map(create_function('$o', 'return $o->id;'), $planes);
+    $planeAssocArray = array();
+    foreach ($planes as $plane) {
+      $planeAssocArray[$plane->id] = $plane->id;
+    }
     return isset($which) ?
-      (isset($planes[$which]) ? $planes[$which] : '') :
-      $planes;
+      (isset($planeAssocArray[$which]) ? $planeAssocArray[$which] : '') :
+      $planeAssocArray;
   }
 
   public function airports($which = null)
@@ -37,38 +27,36 @@ class App extends CI_Model
     $destinationCodes = array($airline["dest1"], $airline["dest2"], $airline["dest3"]);
 
     $destinationNames = array();
+    $destAssocArray = array();
 
     //use WackyAPI to grab names of destinations
     foreach ($destinationCodes as $destination) {
       $destination = $this->wackyAPI->getAirport($destination);
-      array_push($destinationNames, $destination["airport"]);
+      array_push($destinationNames, (object)$destination);
     }
 
-    array_push($destinationNames, 'Fort Nelson Airport');
+    foreach ($destinationNames as $destinationName) {
+      $destAssocArray[$destinationName->airport] = $destinationName->airport;
+
+    }
+
+    $destAssocArray['Fort Nelson Airport'] =  'Fort Nelson Airport';
 
     return isset($which) ?
-      (isset($destinationNames[$which]) ? $destinationNames[$which] : '') :
-      $destinationNames;
-  }
-
-
-  public function takeofftime($which = null)
-  {
-    return isset($which) ?
-      (isset($this->takeofftimes[$which]) ? $this->takeofftimes[$which] : '') :
-      $this->takeofftimes;
+      (isset($destAssocArray[$which]) ? $destAssocArray[$which] : '') :
+      $destAssocArray;
   }
 
   public function getAllPlanes($which = null)
   {
     $planes = $this->wackyAPI->getAirplanes();
     $planeObj = array();
-    foreach ($planes as $plane){
-      array_push($planeObj, (object) $plane);
+    foreach ($planes as $plane) {
+      array_push($planeObj, (object)$plane);
     }
     $planeIds = array();
 
-    foreach($planeObj as $plane){
+    foreach ($planeObj as $plane) {
       $planeIds[$plane->id] = $plane->model;
     }
 
@@ -77,25 +65,41 @@ class App extends CI_Model
       $planeIds;
   }
 
-  public function getPlaneInfo($planeId){
+  public function getPlaneInfo($planeId)
+  {
     $plane = $this->wackyAPI->getAirplane($planeId);
     return $plane;
   }
 
-  public function validatePlane($plane){
+  public function validatePlane($plane)
+  {
     $limit = 10000;
     $currentValue = $plane->price;
     $currentPlanes = $this->fleets->all();
 
-    foreach ($currentPlanes as $currentPlane){
+    foreach ($currentPlanes as $currentPlane) {
       $currentValue += $currentPlane->price;
     }
 
-    if($currentValue > $limit){
+    if ($currentValue > $limit) {
       return false;
     } else
       return true;
 
+  }
+
+  public function validateFlight($flight)
+  {
+    $latestLandingTime = 2200;
+    $earliestTakeoffTime = 800;
+    if($flight->destination == $flight->departure)
+      return false;
+    if($flight->arrivalTime > $latestLandingTime)
+      return false;
+    if($flight->departTime < $earliestTakeoffTime)
+      return false;
+
+    return true;
   }
 
 
